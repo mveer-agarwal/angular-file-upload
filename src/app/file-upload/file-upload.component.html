@@ -1,0 +1,84 @@
+<div class="container text-center">
+  <nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">Admiral File Upload</span>
+  </nav>
+  <span *ngIf="errorMessage">{{ errorMessage }}</span>
+  <mat-card>
+    <form [formGroup]="uploadForm" (ngSubmit)="uploadSubmit()">
+      <mat-card-content>
+        <mat-form-field class="form-field">
+          <mat-label>Select Document Type</mat-label>
+          <mat-select formControlName="type" required>
+            <mat-option value="Passport">Passport</mat-option>
+            <mat-option value="Driving_license">Driving License</mat-option>
+            <mat-option value="PAN">PAN</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br />
+        <div
+          class="upload text-center d-flex justify-content-center align-items-center"
+        >
+          <div class="drop-zone" ng2FileDrop [uploader]="uploader">
+            <span>Drag and drop or </span>
+            <input
+              formControlName="document"
+              type="file"
+              ng2FileSelect
+              style="display: none"
+              #file
+              accept=".png"
+              [uploader]="uploader"
+              multiple
+              (fileOver)="handleFileOver()"
+            />
+            <div>
+              <button
+                mat-raised-button
+                color="primary"
+                class="add-files-btn"
+                (click)="chooseDocument()"
+              >
+                Choose Document
+              </button>
+            </div>
+          </div>
+        </div>
+        <mat-list>
+          <mat-list-item *ngFor="let item of this.uploader.queue">
+            <h4 mat-line>{{ item.file.name }}</h4>
+
+            <mat-progress-bar
+              *ngIf="progress && progress[item.file.name]"
+              mode="determinate"
+              [value]="progress[item.file.name].progress | async"
+            >
+            </mat-progress-bar>
+            <mat-icon class="delete text-center" (click)="item.remove()"
+              >delete</mat-icon
+            >
+          </mat-list-item>
+        </mat-list>
+        <br />
+        <!-- <p>
+          <div>size max {{allowedFileSize}}</div>
+          <div> Allowed format {{allowedFileFormat}} </div>
+        </p>
+        <p>
+          <div>Order schiken  Sie uns  enine email</div>
+          <div>service@admiral.com</div>
+        </p> -->
+      </mat-card-content>
+      <mat-card-footer>
+        <button *ngIf="showCancelButton" mat-button>Cancel</button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!uploadForm.valid"
+          type="submit"
+        >
+          Upload Data
+        </button>
+      </mat-card-footer>
+    </form>
+  </mat-card>
+</div>

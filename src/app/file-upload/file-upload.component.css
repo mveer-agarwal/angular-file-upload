@@ -1,0 +1,23 @@
+.upload {
+  min-height: 200px;
+  min-width: 200px;
+  border: 2px dashed gray;
+  border-radius: 10px;
+}
+
+.drop-zone {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.drop-zone span {
+  display: block;
+  opacity: 0.5;
+  padding-bottom: 10px;
+  font-size: 20px;
+}
+
+.delete {
+  cursor: pointer;
+}
