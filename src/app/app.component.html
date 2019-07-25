@@ -1,1 +1,47 @@
-<router-outlet></router-outlet>
+<div class="container text-center">
+  <nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">Admiral File Upload</span>
+  </nav>
+  <span *ngIf="errorMessage">{{ errorMessage }}</span>
+  <mat-card>
+    <form [formGroup]="uploadForm" (ngSubmit)="uploadSubmit()">
+      <mat-card-content>
+        <mat-form-field class="form-field">
+          <mat-label>Select Document Type</mat-label>
+          <mat-select formControlName="type" required>
+            <mat-option value="Passport">Passport</mat-option>
+            <mat-option value="Driving_license">Driving License</mat-option>
+            <mat-option value="PAN">PAN</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br />
+        <app-file-upload
+          [progress]="progress"
+          [config]="config"
+          (uploadFiles)="addFiles($event)"
+        ></app-file-upload>
+
+        <br />
+        <!-- <p>
+          <div>size max {{allowedFileSize}}</div>
+          <div> Allowed format {{allowedFileFormat}} </div>
+        </p>
+        <p>
+          <div>Order schiken  Sie uns  enine email</div>
+          <div>service@admiral.com</div>
+        </p> -->
+      </mat-card-content>
+      <mat-card-footer>
+        <button *ngIf="showCancelButton" mat-button>Cancel</button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!uploadForm.valid"
+          type="submit"
+        >
+          Upload Data
+        </button>
+      </mat-card-footer>
+    </form>
+  </mat-card>
+</div>
